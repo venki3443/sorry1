@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm So Sorry</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .heart {
+            color: #e53e3e;
+            font-size: 3rem;
+            animation: pulse 1.5s infinite;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4a5568;
+            margin: 20px 0;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-yes {
+            background-color: #059669;
+            color: white;
+        }
+        .btn-yes:hover {
+            background-color: #047857;
+            transform: scale(1.05);
+        }
+        .btn-no {
+            background-color: #e53e3e;
+            color: white;
+        }
+        .spawned-yes {
+            position: absolute;
+            z-index: 5;
+            animation: popIn 0.3s ease-out forwards;
+        }
+        #successMessage {
+            display: none;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #059669;
+            font-size: 1.3rem;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <div class="heart">❤️</div>
+        <h1>I'm Sorry!</h1>
+        <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 20px 0;">
+        
+        <p>
+            Hey Prathyusha,<br><br>
+            I just wanted to say I'm so incredibly sorry for my crabby behaviour. The thought of losing you or things changing between us makes sad. Please forgive your friend.
+        </p>
+        
+        <p>Do you forgive me?</p>
+        
+        <div class="btn-container" id="originalButtons">
+            <button class="btn btn-yes" onclick="forgiven()">Yes</button>
+            <button class="btn btn-no" onclick="spawnMoreYes()">No</button>
+        </div>
+        
+        <div id="successMessage">Yay! Best friends forever! 🥹 </div>
+    </div>
+
+    <script>
+        function forgiven() {
+            document.getElementById('originalButtons').style.display = 'none';
+            const extraButtons = document.querySelectorAll('.spawned-yes');
+            extraButtons.forEach(btn => btn.remove());
+            document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function spawnMoreYes() {
+            for (let i = 0; i < 5; i++) {
+                const newYes = document.createElement('button');
+                newYes.innerText = 'Yes! ';
+                newYes.className = 'btn btn-yes spawned-yes';
+                
+                const randomX = Math.random() * (window.innerWidth - 100);
+                const randomY = Math.random() * (window.innerHeight - 50);
+                
+                newYes.style.left = randomX + 'px';
+                newYes.style.top = randomY + 'px';
+                newYes.onclick = forgiven;
+                
+                document.body.appendChild(newYes);
+            }
+        }
+    </script>
+</body>
